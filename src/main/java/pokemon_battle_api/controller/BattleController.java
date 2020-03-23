@@ -1,10 +1,8 @@
 package pokemon_battle_api.controller;
 
 import lombok.AllArgsConstructor;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import pokemon_battle_api.dto.BattleDto;
-import pokemon_battle_api.dto.UUIDDto;
 import pokemon_battle_api.entity.Battle;
 import pokemon_battle_api.fight.BattleManager;
 import pokemon_battle_api.service.TrainerPokemonService;
@@ -16,6 +14,7 @@ import java.util.UUID;
 @RestController
 @RequestMapping("/battles")
 @AllArgsConstructor
+@CrossOrigin
 public class BattleController {
 
     private BattleManager battleManager;
