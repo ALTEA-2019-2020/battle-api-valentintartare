@@ -5,11 +5,11 @@ import pokemon_battle_api.entity.Pokemon;
 public class FightEngine {
     public static Pokemon getPokemonWithStats(Pokemon pokemon){
         Integer level = pokemon.getLevel();
-        Integer attack = getRealStats(pokemon.getPokemonType().getStats().getAttack(),level);
-        Integer speed = getRealStats(pokemon.getPokemonType().getStats().getSpeed(),level);
-        Integer defense = getRealStats(pokemon.getPokemonType().getStats().getDefense(),level);
+        Integer attack = getRealStats(pokemon.getType().getStats().getAttack(),level);
+        Integer speed = getRealStats(pokemon.getType().getStats().getSpeed(),level);
+        Integer defense = getRealStats(pokemon.getType().getStats().getDefense(),level);
 
-        Integer hp = getRealHp(pokemon.getPokemonType().getStats().getHp(),level);
+        Integer hp = getRealHp(pokemon.getType().getStats().getHp(),level);
 
         pokemon.setAttack(attack);
         pokemon.setDefense(defense);
