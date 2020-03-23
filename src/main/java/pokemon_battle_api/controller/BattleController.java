@@ -2,7 +2,6 @@ package pokemon_battle_api.controller;
 
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
-import pokemon_battle_api.dto.BattleDto;
 import pokemon_battle_api.entity.Battle;
 import pokemon_battle_api.fight.BattleManager;
 import pokemon_battle_api.service.TrainerPokemonService;
@@ -31,12 +30,12 @@ public class BattleController {
     }
 
     @PostMapping
-    public Battle setNewBattle(@RequestBody BattleDto battleDto) {
-        return battleManager.createBattle(trainerPokemonService.getTrainers(battleDto.getTrainer()), trainerPokemonService.getTrainers(battleDto.getOpponent()));
+    public Battle setNewBattle(@RequestParam String trainer, @RequestParam String opponent) {
+        return battleManager.createBattle(trainerPokemonService.getTrainers(trainer), trainerPokemonService.getTrainers(opponent));
     }
 
     @PostMapping("/{uuid}/{trainerName}/attack")
-    public Battle attack(@PathVariable UUID uuid, @PathVariable String trainerName){
+    public Battle attack(@PathVariable UUID uuid, @PathVariable String trainerName) {
         return battleManager.attackOnBattle(uuid, trainerName);
     }
 
