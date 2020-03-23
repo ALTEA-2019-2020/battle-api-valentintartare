@@ -10,6 +10,7 @@ import pokemon_battle_api.exception.ApplicationException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Data
 @Builder
@@ -33,11 +34,15 @@ public class Battle {
     private Map<String, Pokemon> involvePokemonIntoFight(String trainerName) {
         Map<String, Pokemon> pokemonMap = new HashMap<>();
         if (nextTurn && getTrainer().getName().equals(trainerName)) {
-            pokemonMap.put(Constants.POKEMON_ATTACKER, getTrainer().getTeam().get(0));
-            pokemonMap.put(Constants.POKEMON_DEFENDER, getOpponent().getTeam().get(0));
+            pokemonMap.put(Constants.POKEMON_ATTACKER, getTrainer().getTeam().stream().filter(pokemon -> !pokemon.isKo()).collect(Collectors.toList())
+                    .get(0));
+            pokemonMap.put(Constants.POKEMON_DEFENDER, getOpponent().getTeam().stream().filter(pokemon -> !pokemon.isKo()).collect(Collectors.toList())
+                    .get(0));
         } else if (!nextTurn && getOpponent().getName().equals(trainerName)){
-            pokemonMap.put(Constants.POKEMON_ATTACKER, getOpponent().getTeam().get(0));
-            pokemonMap.put(Constants.POKEMON_DEFENDER, getTrainer().getTeam().get(0));
+            pokemonMap.put(Constants.POKEMON_ATTACKER, getOpponent().getTeam().stream().filter(pokemon -> !pokemon.isKo()).collect(Collectors.toList())
+                    .get(0));
+            pokemonMap.put(Constants.POKEMON_DEFENDER, getTrainer().getTeam().stream().filter(pokemon -> !pokemon.isKo()).collect(Collectors.toList())
+                    .get(0));
         }else{
             throw new ApplicationException(HttpStatus.BAD_REQUEST, Constants.WRONG_TRAINER);
         }
@@ -46,18 +51,20 @@ public class Battle {
 
     private void computeFight(Pokemon pokemonAttacker, Pokemon pokemonDefender) {
         Integer lvlAttacker = pokemonAttacker.getLevel();
-        Integer powerAttack = pokemonAttacker.getPokemonType().getStats().getAttack();
-        Integer powerDefense = pokemonDefender.getPokemonType().getStats().getDefense();
-        Integer hpDefender = pokemonDefender.getPokemonType().getStats().getHp();
+        Integer powerAttack = pokemonAttacker.getAttack();
+        Integer powerDefense = pokemonDefender.getDefense();
+        Integer hpDefender = pokemonDefender.getMaxHp();
 
         Integer HPToLose = (((2 * lvlAttacker / 5) + (2 * powerAttack / powerDefense)) + 2);
-        pokemonDefender.getPokemonType().getStats().setHp(hpDefender - HPToLose);
+        pokemonDefender.setMaxHp(hpDefender - HPToLose);
 
-        if (pokemonDefender.getPokemonType().getStats().getHp() < 0) {
+        if (pokemonDefender.getMaxHp() < 0) {
             if (nextTurn)
-                getOpponent().getTeam().remove(pokemonDefender);
+                getOpponent().getTeam().stream().filter(pokemon -> !pokemon.isKo()).collect(Collectors.toList())
+                        .get(0).setKo(true);
             else
-                getTrainer().getTeam().remove(pokemonDefender);
+                getTrainer().getTeam().stream().filter(pokemon -> !pokemon.isKo()).collect(Collectors.toList())
+                        .get(0).setKo(true);
         }
     }
 

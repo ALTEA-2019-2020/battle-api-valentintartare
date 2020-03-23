@@ -10,4 +10,10 @@ public class Pokemon {
     private int level;
 
     private int pokemonTypeId;
+
+    private int maxHp;
+    private int attack;
+    private int defense;
+    private int speed;
+    private boolean ko;
 }

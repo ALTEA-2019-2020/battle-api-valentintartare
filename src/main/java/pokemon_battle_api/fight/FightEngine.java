@@ -11,11 +11,11 @@ public class FightEngine {
 
         Integer hp = getRealHp(pokemon.getPokemonType().getStats().getHp(),level);
 
-        pokemon.getPokemonType().getStats().setAttack(attack);
-        pokemon.getPokemonType().getStats().setDefense(defense);
-        pokemon.getPokemonType().getStats().setSpeed(speed);
+        pokemon.setAttack(attack);
+        pokemon.setDefense(defense);
+        pokemon.setSpeed(speed);
 
-        pokemon.getPokemonType().getStats().setHp(hp);
+        pokemon.setMaxHp(hp);
 
         return pokemon;
     }

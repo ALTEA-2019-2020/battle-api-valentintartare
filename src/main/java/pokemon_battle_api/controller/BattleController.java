@@ -32,10 +32,8 @@ public class BattleController {
     }
 
     @PostMapping
-    public UUIDDto setNewBattle(@RequestBody BattleDto battleDto) {
-        return UUIDDto.builder()
-                .uuid(battleManager.createBattle(trainerPokemonService.getTrainers(battleDto.getTrainer()), trainerPokemonService.getTrainers(battleDto.getOpponent())))
-                .build();
+    public Battle setNewBattle(@RequestBody BattleDto battleDto) {
+        return battleManager.createBattle(trainerPokemonService.getTrainers(battleDto.getTrainer()), trainerPokemonService.getTrainers(battleDto.getOpponent()));
     }
 
     @PostMapping("/{uuid}/{trainerName}/attack")

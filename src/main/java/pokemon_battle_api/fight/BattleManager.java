@@ -18,7 +18,7 @@ public class BattleManager {
 
     private Map<UUID, Battle> battleList = new HashMap<>();
 
-    public UUID createBattle(Trainer trainer1, Trainer trainer2) {
+    public Battle createBattle(Trainer trainer1, Trainer trainer2) {
         List<Pokemon> pokemonsTrainer1 = setStatsAndPushIntoList(trainer1);
         List<Pokemon> pokemonsTrainer2 = setStatsAndPushIntoList(trainer2);
         trainer1.setTeam(pokemonsTrainer1);
@@ -31,7 +31,7 @@ public class BattleManager {
         UUID uuid = UUID.randomUUID();
         battle.setUuid(uuid);
         battleList.put(uuid, battle);
-        return uuid;
+        return battle;
     }
 
     private List<Pokemon> setStatsAndPushIntoList(Trainer trainer) {
