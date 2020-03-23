@@ -23,8 +23,10 @@ public class BattleManager {
         List<Pokemon> pokemonsTrainer2 = setStatsAndPushIntoList(trainer2);
         trainer1.setTeam(pokemonsTrainer1);
         trainer2.setTeam(pokemonsTrainer2);
-        trainer1.setNextTurn(true);
-        trainer2.setNextTurn(false);
+        Pokemon pokemon1 = trainer1.getTeam().stream().max(Comparator.comparing(Pokemon::getSpeed)).get();
+        Pokemon pokemon2 = trainer2.getTeam().stream().max(Comparator.comparing(Pokemon::getSpeed)).get();
+        trainer1.setNextTurn(pokemon1.getSpeed() > pokemon2.getSpeed());
+        trainer2.setNextTurn(pokemon1.getSpeed() > pokemon2.getSpeed());
         Battle battle = Battle.builder()
                 .trainer(trainer1)
                 .opponent(trainer2)

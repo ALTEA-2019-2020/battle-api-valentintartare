@@ -14,7 +14,6 @@ public class FightEngine {
         pokemon.setAttack(attack);
         pokemon.setDefense(defense);
         pokemon.setSpeed(speed);
-
         pokemon.setMaxHp(hp);
         pokemon.setHp(hp);
 
