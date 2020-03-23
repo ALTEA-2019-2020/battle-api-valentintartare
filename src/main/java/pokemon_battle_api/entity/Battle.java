@@ -53,12 +53,12 @@ public class Battle {
         Integer lvlAttacker = pokemonAttacker.getLevel();
         Integer powerAttack = pokemonAttacker.getAttack();
         Integer powerDefense = pokemonDefender.getDefense();
-        Integer hpDefender = pokemonDefender.getMaxHp();
+        Integer hpDefender = pokemonDefender.getHp();
 
         Integer HPToLose = (((2 * lvlAttacker / 5) + (2 * powerAttack / powerDefense)) + 2);
-        pokemonDefender.setMaxHp(hpDefender - HPToLose);
+        pokemonDefender.setHp(hpDefender - HPToLose);
 
-        if (pokemonDefender.getMaxHp() < 0) {
+        if (pokemonDefender.getHp() < 0) {
             if (nextTurn)
                 getOpponent().getTeam().stream().filter(pokemon -> !pokemon.isKo()).collect(Collectors.toList())
                         .get(0).setKo(true);

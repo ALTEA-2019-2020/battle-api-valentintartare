@@ -12,6 +12,7 @@ public class Pokemon {
     private int pokemonTypeId;
 
     private int maxHp;
+    private int hp;
     private int attack;
     private int defense;
     private int speed;

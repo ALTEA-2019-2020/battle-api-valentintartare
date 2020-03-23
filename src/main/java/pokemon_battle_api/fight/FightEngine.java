@@ -16,6 +16,7 @@ public class FightEngine {
         pokemon.setSpeed(speed);
 
         pokemon.setMaxHp(hp);
+        pokemon.setHp(hp);
 
         return pokemon;
     }
