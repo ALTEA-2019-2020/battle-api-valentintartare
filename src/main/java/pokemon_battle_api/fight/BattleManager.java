@@ -26,7 +26,7 @@ public class BattleManager {
         Pokemon pokemon1 = trainer1.getTeam().stream().max(Comparator.comparing(Pokemon::getSpeed)).get();
         Pokemon pokemon2 = trainer2.getTeam().stream().max(Comparator.comparing(Pokemon::getSpeed)).get();
         trainer1.setNextTurn(pokemon1.getSpeed() > pokemon2.getSpeed());
-        trainer2.setNextTurn(pokemon1.getSpeed() > pokemon2.getSpeed());
+        trainer2.setNextTurn(pokemon2.getSpeed() > pokemon1.getSpeed());
         Battle battle = Battle.builder()
                 .trainer(trainer1)
                 .opponent(trainer2)
