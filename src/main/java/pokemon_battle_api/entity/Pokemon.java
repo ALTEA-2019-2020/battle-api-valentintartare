@@ -5,7 +5,7 @@ import lombok.Data;
 @Data
 public class Pokemon {
 
-    private PokemonType pokemonType;
+    private PokemonType type;
 
     private int level;
 
