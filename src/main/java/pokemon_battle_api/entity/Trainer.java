@@ -15,4 +15,6 @@ public class Trainer {
 
     private List<Pokemon> team;
 
+    private boolean nextTurn;
+
 }

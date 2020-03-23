@@ -23,10 +23,11 @@ public class BattleManager {
         List<Pokemon> pokemonsTrainer2 = setStatsAndPushIntoList(trainer2);
         trainer1.setTeam(pokemonsTrainer1);
         trainer2.setTeam(pokemonsTrainer2);
+        trainer1.setNextTurn(true);
+        trainer2.setNextTurn(false);
         Battle battle = Battle.builder()
                 .trainer(trainer1)
                 .opponent(trainer2)
-                .nextTurn(true)
                 .build();
         UUID uuid = UUID.randomUUID();
         battle.setUuid(uuid);

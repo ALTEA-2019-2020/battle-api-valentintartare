@@ -19,31 +19,31 @@ public class Battle {
     private UUID uuid;
     private Trainer trainer;
     private Trainer opponent;
-    private boolean nextTurn;
     private Trainer winner;
 
     public void processBattle(String trainerName) {
         if (winner == null) {
             Map<String, Pokemon> pokemonMap = involvePokemonIntoFight(trainerName);
             computeFight(pokemonMap.get(Constants.POKEMON_ATTACKER), pokemonMap.get(Constants.POKEMON_DEFENDER));
-            nextTurn = !nextTurn;
+            trainer.setNextTurn(!trainer.isNextTurn());
+            opponent.setNextTurn(!opponent.isNextTurn());
             if (checkIfWinner()) return;
         }
     }
 
     private Map<String, Pokemon> involvePokemonIntoFight(String trainerName) {
         Map<String, Pokemon> pokemonMap = new HashMap<>();
-        if (nextTurn && getTrainer().getName().equals(trainerName)) {
+        if (getTrainer().isNextTurn() && getTrainer().getName().equals(trainerName)) {
             pokemonMap.put(Constants.POKEMON_ATTACKER, getTrainer().getTeam().stream().filter(pokemon -> !pokemon.isKo()).collect(Collectors.toList())
                     .get(0));
             pokemonMap.put(Constants.POKEMON_DEFENDER, getOpponent().getTeam().stream().filter(pokemon -> !pokemon.isKo()).collect(Collectors.toList())
                     .get(0));
-        } else if (!nextTurn && getOpponent().getName().equals(trainerName)){
+        } else if (getOpponent().isNextTurn() && getOpponent().getName().equals(trainerName)) {
             pokemonMap.put(Constants.POKEMON_ATTACKER, getOpponent().getTeam().stream().filter(pokemon -> !pokemon.isKo()).collect(Collectors.toList())
                     .get(0));
             pokemonMap.put(Constants.POKEMON_DEFENDER, getTrainer().getTeam().stream().filter(pokemon -> !pokemon.isKo()).collect(Collectors.toList())
                     .get(0));
-        }else{
+        } else {
             throw new ApplicationException(HttpStatus.BAD_REQUEST, Constants.WRONG_TRAINER);
         }
         return pokemonMap;
@@ -59,7 +59,7 @@ public class Battle {
         pokemonDefender.setHp(hpDefender - HPToLose);
 
         if (pokemonDefender.getHp() < 0) {
-            if (nextTurn)
+            if (trainer.isNextTurn())
                 getOpponent().getTeam().stream().filter(pokemon -> !pokemon.isKo()).collect(Collectors.toList())
                         .get(0).setKo(true);
             else
